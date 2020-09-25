@@ -8,7 +8,7 @@ import logger from 'koa-logger';
 import next from 'next';
 import session from 'koa-session';
 import * as handlers from './handlers/index';
-import { middleware } from './middleware';
+import { routers } from './routers';
 dotenv.config();
 const port = parseInt(process.env.PORT, 10) || 8081;
 const dev = process.env.NODE_ENV !== 'production';
@@ -70,7 +70,7 @@ app.prepare().then(() => {
     }),
   );
 
-  const router = middleware(handle);
+  const router = routers(handle);
   server.use(router.allowedMethods());
   server.use(router.routes());
 
