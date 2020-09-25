@@ -4,6 +4,7 @@ module.exports = {
     'plugin:shopify/polaris',
     'plugin:shopify/jest',
     'plugin:shopify/webpack',
+    'plugin:sonarjs/recommended',
   ],
   rules: {
     'import/no-unresolved': 'off',

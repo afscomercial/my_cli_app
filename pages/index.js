@@ -1,4 +1,4 @@
-import { Heading, Page } from "@shopify/polaris";
+import { Heading, Page } from '@shopify/polaris';
 
 const Index = () => (
   <Page>
