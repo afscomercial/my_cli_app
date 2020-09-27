@@ -1,8 +1,8 @@
 module.exports = {
   extends: [
     'plugin:@shopify/esnext',
-    'plugin:shopify/react',
-    'plugin:shopify/polaris',
+    'plugin:@shopify/react',
+    'plugin:@shopify/polaris',
     'plugin:sonarjs/recommended',
     'plugin:shopify/jest',
     'plugin:shopify/webpack',

@@ -1,3 +1,8 @@
+# compiled output
+dist
+tmp
+out-tsc
+
 # Environment Configuration
 .env
 
@@ -19,3 +24,18 @@ config/tunnel.pid
 
 # next build output
 .next/
+
+# ide
+.settings
+.vscode
+.editorconfig
+
+# System Files
+.DS_Store
+Thumbs.db
+*.log
+
+# Custom
+coverage
+dependabot
+

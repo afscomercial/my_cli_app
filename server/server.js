@@ -1,17 +1,32 @@
 import '@babel/polyfill';
-import dotenv from 'dotenv';
-import 'isomorphic-fetch';
 import createShopifyAuth from '@shopify/koa-shopify-auth';
 import graphQLProxy, { ApiVersion } from '@shopify/koa-shopify-graphql-proxy';
+import { receiveWebhook } from '@shopify/koa-shopify-webhooks';
+import dotenv from 'dotenv';
+import 'isomorphic-fetch';
 import Koa from 'koa';
-import logger from 'koa-logger';
-import next from 'next';
+import pino from 'pino';
+import pinoLogger from 'koa-pino-logger';
+import koaLogger from 'koa-logger';
 import session from 'koa-session';
+import next from 'next';
 import * as handlers from './handlers/index';
-import { routers } from './routers';
+import * as routers from './routers/index';
 dotenv.config();
-const port = parseInt(process.env.PORT, 10) || 8081;
 const dev = process.env.NODE_ENV !== 'production';
+const log = pino({
+  timestamp: () => {
+    return pino.stdTimeFunctions.isoTime();
+  },
+  prettyPrint: dev,
+});
+const logger = dev
+  ? pinoLogger({
+      instance: log,
+    })
+  : koaLogger();
+const port = parseInt(process.env.PORT, 10) || 8081;
+
 const app = next({
   dev,
 });
@@ -19,14 +34,12 @@ const handle = app.getRequestHandler();
 const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY, SCOPES } = process.env;
 app.prepare().then(() => {
   const server = new Koa();
-  server.use(logger());
-  server.use(async (ctx, next) => {
-    try {
-      await next();
-    } catch (err) {
-      console.log('Error:', err.message);
-    }
+  const webhook = receiveWebhook({
+    secret: SHOPIFY_API_SECRET,
   });
+
+  server.use(handlers.errorHandler);
+  server.use(logger);
 
   server.use(
     session(
@@ -45,8 +58,6 @@ app.prepare().then(() => {
       scopes: [SCOPES],
 
       async afterAuth(ctx) {
-        //Auth token and shop available in session
-        //Redirect to shop upon auth
         const { shop, accessToken } = ctx.session;
         await handlers.registerWebhooks(
           shop,
@@ -70,11 +81,11 @@ app.prepare().then(() => {
     }),
   );
 
-  const router = routers(handle);
-  server.use(router.allowedMethods());
+  const router = routers.routers(handle, webhook);
   server.use(router.routes());
+  server.use(router.allowedMethods());
 
   server.listen(port, () => {
-    console.log(`> Ready on http://localhost:${port}`);
+    log.info(`> Ready on http://localhost:${port}`);
   });
 });
