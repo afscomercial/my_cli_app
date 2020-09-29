@@ -1,12 +1,16 @@
 module.exports = {
+  env: {
+    es6: true,
+  },
   extends: [
-    'plugin:@shopify/esnext',
-    'plugin:@shopify/react',
-    'plugin:@shopify/polaris',
+    'plugin:shopify/react',
+    'plugin:shopify/polaris',
     'plugin:sonarjs/recommended',
-    'plugin:shopify/jest',
     'plugin:shopify/webpack',
   ],
+  parserOptions: {
+    ecmaVersion: 12,
+  },
   rules: {
     'import/no-unresolved': 'off',
   },

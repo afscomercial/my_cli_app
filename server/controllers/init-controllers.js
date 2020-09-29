@@ -1,11 +1,6 @@
-import pino from 'pino';
+import { logger } from '../handlers/index';
 const dev = process.env.NODE_ENV !== 'production';
-const log = pino({
-  timestamp: () => {
-    return pino.stdTimeFunctions.isoTime();
-  },
-  prettyPrint: dev,
-});
+
 var countMap = new Map();
 
 function countLog(name) {
@@ -15,15 +10,15 @@ function countLog(name) {
   } else {
     countMap.set(countMap.set(name, { value: 1 }));
   }
-  log.info(`> ${name} event # : ${countMap.get(name).value}`);
+  logger.info(`> ${name} event # : ${countMap.get(name).value}`);
 }
 
 export const status = (ctx) => {
-  log.info(`> Status ALIVE`);
-  ctx.body = {
+  logger.info(`> Status ALIVE`);
+  return (ctx.body = {
     status: 'success',
     data: 'data',
-  };
+  });
 };
 
 export const webhook = (ctx) => {

@@ -11,6 +11,7 @@ node_modules
 
 # Test coverage directory
 coverage
+.nyc_output
 
 # Ignore Apple macOS Desktop Services Store
 .DS_Store
@@ -36,5 +37,3 @@ Thumbs.db
 *.log
 
 # Custom
-coverage
-

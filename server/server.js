@@ -5,7 +5,6 @@ import { receiveWebhook } from '@shopify/koa-shopify-webhooks';
 import dotenv from 'dotenv';
 import 'isomorphic-fetch';
 import Koa from 'koa';
-import pino from 'pino';
 import pinoLogger from 'koa-pino-logger';
 import koaLogger from 'koa-logger';
 import session from 'koa-session';
@@ -14,15 +13,9 @@ import * as handlers from './handlers/index';
 import * as routers from './routers/index';
 dotenv.config();
 const dev = process.env.NODE_ENV !== 'production';
-const log = pino({
-  timestamp: () => {
-    return pino.stdTimeFunctions.isoTime();
-  },
-  prettyPrint: dev,
-});
 const logger = dev
   ? pinoLogger({
-      instance: log,
+      instance: handlers.logger,
     })
   : koaLogger();
 const port = parseInt(process.env.PORT, 10) || 8081;
@@ -86,6 +79,6 @@ app.prepare().then(() => {
   server.use(router.allowedMethods());
 
   server.listen(port, () => {
-    log.info(`> Ready on http://localhost:${port}`);
+    handlers.logger.info(`> Ready on http://localhost:${port}`);
   });
 });
