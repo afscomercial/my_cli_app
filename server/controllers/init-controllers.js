@@ -1,8 +1,10 @@
-import { logger } from '../handlers/index';
+import { logsEnum, writeLog } from '../handlers/index';
+import dotenv from 'dotenv';
+dotenv.config();
+
 const dev = process.env.NODE_ENV !== 'production';
 
 var countMap = new Map();
-
 function countLog(name) {
   if (countMap.has(name)) {
     let count = countMap.get(name);
@@ -10,15 +12,18 @@ function countLog(name) {
   } else {
     countMap.set(countMap.set(name, { value: 1 }));
   }
-  logger.info(`> ${name} event # : ${countMap.get(name).value}`);
+  writeLog(logsEnum.info, `> ${name} event # : ${countMap.get(name).value}`);
 }
 
 export const status = (ctx) => {
-  logger.info(`> Status ALIVE`);
-  return (ctx.body = {
+  writeLog(logsEnum.info, `> Status ALIVE`);
+  const response = ctx;
+  ctx.status = 200;
+  ctx.body = {
     status: 'success',
     data: 'data',
-  });
+  };
+  return response;
 };
 
 export const webhook = (ctx) => {

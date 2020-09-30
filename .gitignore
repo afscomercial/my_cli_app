@@ -35,5 +35,3 @@ config/tunnel.pid
 .DS_Store
 Thumbs.db
 *.log
-
-# Custom
