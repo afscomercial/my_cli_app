@@ -11,7 +11,7 @@ export const registerWebhooks = async (shop, accessToken, type, url, apiVersion)
   });
 
   if (registration.success) {
-    writeLog(logsEnum.info, `> Successfully registered webhook!`);
+    writeLog(logsEnum.warn, `> Successfully registered webhook!`);
   } else {
     writeLog(
       logsEnum.info,

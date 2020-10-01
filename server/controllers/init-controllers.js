@@ -1,4 +1,5 @@
-import { logsEnum, writeLog } from '../handlers/index';
+import { logsEnum, writeLog } from '../handlers';
+import { post } from '../services';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -15,13 +16,14 @@ function countLog(name) {
   writeLog(logsEnum.info, `> ${name} event # : ${countMap.get(name).value}`);
 }
 
-export const status = (ctx) => {
-  writeLog(logsEnum.info, `> Status ALIVE`);
+export const status = async (ctx) => {
+  writeLog(logsEnum.info, `> STATUS Alive`);
+  const data = await post('/my/api/path', { data: 'satus' });
   const response = ctx;
   ctx.status = 200;
   ctx.body = {
     status: 'success',
-    data: 'data',
+    data: data,
   };
   return response;
 };

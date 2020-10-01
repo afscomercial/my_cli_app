@@ -69,6 +69,6 @@ app.prepare().then(() => {
   server.use(router.routes());
   server.use(router.allowedMethods());
   server.listen(port, () => {
-    writeLog(logsEnum.info, `> Ready on http://localhost:${port}`);
+    writeLog(logsEnum.info, `> READY on http://localhost:${port}`);
   });
 });

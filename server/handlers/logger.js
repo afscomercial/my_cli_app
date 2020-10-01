@@ -10,7 +10,7 @@ const dest = pino.destination({
   sync: false,
 });
 dest[Symbol.for('pino.metadata')] = true;
-export const logsEnum = Object.freeze({ info: 'info', error: 'error' });
+export const logsEnum = Object.freeze({ info: 'info', error: 'error', warn: 'warn' });
 
 const logger = pino(
   {
@@ -22,12 +22,12 @@ const logger = pino(
   writeLogs ? dest : null,
 );
 
-const writtenLog = () => {
+function writtenLog() {
   if (writeLogs) {
     const { lastMsg, lastLevel, lastTime } = dest;
     console.log('Logged message "%s" at level %d at time %s', lastMsg, lastLevel, lastTime);
   }
-};
+}
 
 const handler = pino.final(logger, (err, finalLogger, evt) => {
   finalLogger.info(`${evt} caught`);
@@ -68,7 +68,8 @@ export const httpLogger = () => {
     logger.info(`> REQUEST url:${path} method:${method} origin:${origin}`);
     writtenLog();
     await next();
-    logger.info(`> RESPONSE status:${ctx.status} msg:${ctx.message}`);
-    writtenLog();
+    // log Response
+    // logger.info(`> RESPONSE status:${ctx.status} msg:${ctx.message}`);
+    // writtenLog();
   };
 };
