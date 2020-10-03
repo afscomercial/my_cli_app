@@ -1,5 +1,5 @@
 import '@babel/polyfill';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv/config';
 import 'isomorphic-fetch';
 import createShopifyAuth from '@shopify/koa-shopify-auth';
 import graphQLProxy, { ApiVersion } from '@shopify/koa-shopify-graphql-proxy';
@@ -10,8 +10,6 @@ import { environment, webhooksOctober19, webhooksApril20 } from './config';
 import { errorHandler, logsEnum, httpLogger, registerWebhooks, writeLog } from './handlers';
 import { routers } from './routers';
 import { receiveWebhook } from '@shopify/koa-shopify-webhooks';
-
-const port = parseInt(process.env.PORT, 10) || 8081;
 const dev = environment.env !== 'production';
 const app = next({
   dev,
@@ -40,11 +38,9 @@ app.prepare().then(() => {
       apiKey: shopifyApiKey,
       secret: shopifyApiSecret,
       scopes: [scopes],
-
       async afterAuth(ctx) {
         const { shop, accessToken } = ctx.session;
         let defaultWebhooks = [];
-
         switch (environment.apiVersion) {
           case ApiVersion.October19:
             defaultWebhooks = webhooksOctober19;
@@ -58,7 +54,6 @@ app.prepare().then(() => {
         for (const webhook of defaultWebhooks) {
           await registerWebhooks(shop, accessToken, webhook.name, webhook.route, webhook.apiVersion);
         }
-
         ctx.cookies.set('shopOrigin', shop, {
           httpOnly: false,
           secure: true,
@@ -68,10 +63,9 @@ app.prepare().then(() => {
       },
     }),
   );
-
   server.use(
     graphQLProxy({
-      version: environment.apiVersion,
+      version: ApiVersion.October19,
     }),
   );
   server.use(httpLogger());

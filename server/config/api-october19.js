@@ -6,36 +6,21 @@ export const webhooksOctober19 = [
   { name: 'CHECKOUTS_CREATE', route: '/webhooks/checkouts/create', apiVersion: ApiVersion.October19 },
   { name: 'CHECKOUTS_DELETE', route: '/webhooks/checkouts/delete', apiVersion: ApiVersion.October19 },
   { name: 'CHECKOUTS_UPDATE', route: '/webhooks/checkouts/update', apiVersion: ApiVersion.October19 },
-  {
-    name: 'COLLECTIONS_LISTINGS_CREATE',
-    route: '/webhooks/collections-listings/create',
-    apiVersion: ApiVersion.October19,
-  },
-  {
-    name: 'COLLECTIONS_LISTINGS_DELETE',
-    route: '/webhooks/collections-listings/delete',
-    apiVersion: ApiVersion.October19,
-  },
-  {
-    name: 'COLLECTIONS_LISTINGS_UPDATE',
-    route: '/webhooks/collections-listings/update',
-    apiVersion: ApiVersion.October19,
-  },
   { name: 'COLLECTIONS_CREATE', route: '/webhooks/collections/create', apiVersion: ApiVersion.October19 },
   { name: 'COLLECTIONS_DELETE', route: '/webhooks/collections/delete', apiVersion: ApiVersion.October19 },
   { name: 'COLLECTIONS_UPDATE', route: '/webhooks/collections/update', apiVersion: ApiVersion.October19 },
   {
-    name: 'CUSTOMERS_GROUPS_CREATE',
+    name: 'CUSTOMER_GROUPS_CREATE',
     route: '/webhooks/customers-groups/create',
     apiVersion: ApiVersion.October19,
   },
   {
-    name: 'CUSTOMERS_GROUPS_DELETE',
+    name: 'CUSTOMER_GROUPS_DELETE',
     route: '/webhooks/customers-groups/delete',
     apiVersion: ApiVersion.October19,
   },
   {
-    name: 'CUSTOMERS_GROUPS_UPDATE',
+    name: 'CUSTOMER_GROUPS_UPDATE',
     route: '/webhooks/customers-groups/update',
     apiVersion: ApiVersion.October19,
   },
@@ -72,7 +57,7 @@ export const webhooksOctober19 = [
   },
   { name: 'ORDERS_UPDATED', route: '/webhooks/orders/updated', apiVersion: ApiVersion.October19 },
   {
-    name: 'ORDERS_TRANSACTIONS_CREATE',
+    name: 'ORDER_TRANSACTIONS_CREATE',
     route: '/webhooks/orders-transactions/create',
     apiVersion: ApiVersion.October19,
   },

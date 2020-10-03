@@ -1,3 +1,1 @@
-import { addTested, status, webhook } from './init-controllers';
-
-export { addTested, status, webhook };
+export * from './init-controllers';

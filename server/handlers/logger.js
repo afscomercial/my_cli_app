@@ -1,8 +1,7 @@
 import pino from 'pino';
-import dotenv from 'dotenv';
-dotenv.config();
+import { environment } from '../config';
 
-const writeLogs = 'WRITE_LOGS' in process.env ? true : false;
+const writeLogs = environment.writeLogs;
 
 const dest = pino.destination({
   dest: './logs/info.log',
@@ -56,6 +55,10 @@ export const writeLog = (type, message) => {
       break;
     case logsEnum.error:
       logger.error(message);
+      writtenLog();
+      break;
+    case logsEnum.warn:
+      logger.warn(message);
       writtenLog();
       break;
     default:
