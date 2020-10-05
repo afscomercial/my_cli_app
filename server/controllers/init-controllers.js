@@ -29,8 +29,8 @@ export const status = async (ctx) => {
 
 export const webhook = (ctx) => {
   let webhook = ctx.state.webhook;
-  console.log(webhook);
   if (dev) {
     countLog(webhook.topic, webhook.domain);
+    console.log(JSON.stringify(webhook));
   }
 };
