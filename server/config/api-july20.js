@@ -1,8 +1,8 @@
 import { ApiVersion } from '@shopify/koa-shopify-graphql-proxy';
 
-const version = ApiVersion.April20;
+const version = ApiVersion.July20;
 
-export const webhooksApril20 = [
+export const webhooksJuly20 = [
   { name: 'APP_UNINSTALLED', route: '/webhooks/app/uninstalled', apiVersion: version },
   { name: 'CARTS_CREATE', route: '/webhooks/carts/create', apiVersion: version },
   { name: 'CARTS_UPDATE', route: '/webhooks/carts/update', apiVersion: version },
