@@ -57,7 +57,7 @@ export function postRequest(path, body) {
   return request(`${baseURL}${path}`, { method: 'post', body });
 }
 
-export function request(url, { method, body, headers } = {}) {
+export function request(url, { method, body, headers }) {
   return axiosInstance({
     method: method,
     url: url,
